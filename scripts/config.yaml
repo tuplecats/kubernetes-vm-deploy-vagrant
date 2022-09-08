@@ -1,0 +1,20 @@
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: ClusterConfiguration
+kubernetesVersion: stable
+apiServer:
+  certSANs:
+  - 172.16.16.100
+  extraArgs:
+    apiserver-count: "3"
+controlPlaneEndpoint: "172.16.16.100:6443"
+etcd:
+  external:
+    endpoints:
+    - https://172.16.16.101:2379
+    - https://172.16.16.102:2379
+    - https://172.16.16.103:2379
+    caFile: /etc/etcd/ca.pem
+    certFile: /etc/etcd/kubernetes.pem
+    keyFile: /etc/etcd/kubernetes-key.pem
+networking:
+  podSubnet: 172.32.0.0/24
